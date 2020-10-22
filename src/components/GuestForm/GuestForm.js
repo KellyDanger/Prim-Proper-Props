@@ -1,35 +1,13 @@
 import React, { Component } from 'react';
 
 class GuestForm extends Component {
-  handleSubmit = (event) => {
-    event.preventDefault();
-    if (this.props.newGuest.name) {
-      this.setState({
-        guestList: [...this.props.guestList, this.props.newGuest],
-        newGuest: {
-          name: '',
-          kidsMeal: 'no',
-        },
-      });
-    } else {
-      alert('The new guest needs a name!');
-    }
-  }
 
-  handleChangeFor = (propertyName) => (event) => {
-    this.setState({
-      newGuest: {
-        ...this.props.newGuest,
-        [propertyName]: event.target.value,
-      }
-    });
-  }
 
   render(){
     return(
       <>
         <h2>Add a new guest</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.props.handleSubmit}>
           <label>
             Name
           </label>
@@ -37,11 +15,11 @@ class GuestForm extends Component {
             type="text"
             placeholder="Name"
             value={this.props.newGuest.name}
-            onChange={this.handleChangeFor('name')}
+            onChange={this.props.handleChangeFor('name')}
           />
           <div>
             Would this guest like a kid's meal?
-            <div onChange={this.handleChangeFor('kidsMeal')}>
+            <div onChange={this.props.handleChangeFor('kidsMeal')}>
               <div>
                 <label>
                   <input

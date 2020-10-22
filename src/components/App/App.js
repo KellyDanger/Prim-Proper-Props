@@ -14,13 +14,40 @@ class App extends Component {
       kidsMeal: 'no',
     },
   }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.newGuest.name) {
+      this.setState({
+        guestList: [...this.state.guestList, this.state.newGuest],
+        newGuest: {
+          name: '',
+          kidsMeal: 'no',
+        },
+      });
+    } else {
+      alert('The new guest needs a name!');
+    }
+  }
+
+  handleChangeFor = (propertyName) => (event) => {
+    this.setState({
+      newGuest: {
+        ...this.state.newGuest,
+        [propertyName]: event.target.value,
+      }
+    });
+  }
+
   render() {
     return (
       <div className="App">
         <Header/>
         <h2>Party Leader</h2>
         {this.state.guestList[0] && <h3>{this.state.guestList[0].name}</h3>}
-        <GuestForm newGuest={this.state.newGuest} guestList={this.state.guestList}/>
+        <GuestForm 
+        newGuest={this.state.newGuest} 
+        handleChangeFor={this.handleChangeFor}
+        handleSubmit={this.handleSubmit}/>
         <GuestList guestList={this.state.guestList}/>
         <DinnerSupplies count={this.state.guestList.length}/>
         <Footer/>    
